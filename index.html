@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>For You, My Everything 💖</title>
+
+    <link rel="preload" href="/fonts/GoogleSans.ttf" as="font" type="font/ttf" crossorigin />
+    <link rel="preload" href="/fonts/Milesdane-Trial.otf" as="font" type="font/otf" crossorigin />
+    <link rel="preload" href="/fonts/Sephora.ttf" as="font" type="font/ttf" crossorigin />
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link rel="stylesheet" href="kepi.css" />
+  </head>
+  <body>
+    <audio id="bg-music" loop preload="auto">
+      <source src="./music/sempurna.mp3" type="audio/mpeg" />
+    </audio>
+
+    <button
+      class="nav-music-btn"
+      id="music-control-btn"
+      onclick="toggleMusic()"
+    >
+      🎵
+    </button>
+    <button class="nav-back-btn" id="global-back-btn" onclick="prevStep()">
+      ‹ Kembali
+    </button>
+
+    <div id="petals-container"></div>
+
+    <div class="app-screen">
+      <div class="step active" id="step-1">
+        <div class="intro-header">
+          ✨ <span>A SPECIAL MESSAGE JUST FOR YOU</span> ✨
+        </div>
+        <div class="intro-sub" id="typed-1"></div>
+        <div class="intro-title" id="typed-2"></div>
+        <button
+          class="btn-primary pulse-anim"
+          onclick="nextStep(2)"
+          style="margin-top: 40px; width: auto; padding: 14px 40px"
+        >
+          Open Message 💌
+        </button>
+      </div>
+
+      <div class="step" id="step-2">
+        <div class="glass-card">
+          <div class="pin-tag">🔒 PRIVATE ACCESS</div>
+          <div class="pin-title">Enter Our PIN</div>
+          <div class="pin-sub">Hint: A date that means everything to us 🗓️</div>
+
+          <div class="pin-dots">
+            <div class="dot" id="dot-0"></div>
+            <div class="dot" id="dot-1"></div>
+            <div class="dot" id="dot-2"></div>
+            <div class="dot" id="dot-3"></div>
+            <div class="dot" id="dot-4"></div>
+            <div class="dot" id="dot-5"></div>
+          </div>
+
+          <div class="keypad">
+            <div class="key-btn" onclick="pressKey('1')">1</div>
+            <div class="key-btn" onclick="pressKey('2')">2</div>
+            <div class="key-btn" onclick="pressKey('3')">3</div>
+            <div class="key-btn" onclick="pressKey('4')">4</div>
+            <div class="key-btn" onclick="pressKey('5')">5</div>
+            <div class="key-btn" onclick="pressKey('6')">6</div>
+            <div class="key-btn" onclick="pressKey('7')">7</div>
+            <div class="key-btn" onclick="pressKey('8')">8</div>
+            <div class="key-btn" onclick="pressKey('9')">9</div>
+            <div class="key-btn delete" onclick="deletePin()">⌫</div>
+            <div class="key-btn" onclick="pressKey('0')">0</div>
+            <div class="key-btn clear" onclick="clearPin()">CLEAR</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step" id="step-3">
+        <div class="envelope-wrapper">
+          <div class="envelope-text">
+            There's something I've been holding inside for a while now...
+          </div>
+          <div class="envelope-sub">Tap the envelope to open it 💌</div>
+
+          <div class="envelope-box pulse-anim" onclick="openEnvelope()">
+            <div class="envelope-flap" id="flap"></div>
+            <div class="wax-seal">🧸</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step" id="step-4">
+        <div class="glass-card letter-card">
+          <div class="letter-header">
+            <span>FOR ZAHRA </span>
+            <span>ALWAYS & FOREVER</span>
+          </div>
+          <div class="letter-title">Dear Zahra,</div>
+          <div class="letter-body">
+            <p>To be completely honest with you — I've been wanting to say this for
+            a very, very long time. Every time the moment felt right, I would
+            hesitate. Not because I wasn't sure, but because I was waiting for the 
+            right moment and for all my affairs to be settled, so that i could say
+            this with a calm mind once I said it.</p>
+
+            <blockquote class="letter-highlight">
+              "The way you laugh, the way you tell your stories, the quiet
+              warmth you bring... it's the kind of comfort I didn't know I was
+              missing until I found it in you."
+            </blockquote>
+
+            <p>You've become one of the most irreplaceable parts of my days. And
+            today, I am ready for the next step. I want to be completely,
+            honestly, wholly transparent with you — because you deserve nothing
+            less.</p>
+            <p>So here I am. Writing this with my whole heart.</p>
+          </div>
+          <div class="letter-footer">Forever yours,</div>
+          <button class="btn-primary" onclick="nextStep(5)">
+            A few memories →
+          </button>
+        </div>
+      </div>
+
+      <div class="step" id="step-5">
+        <div class="carousel-title">
+          Some of my favourite moments with you...
+        </div>
+
+        <div class="polaroid-frame">
+          <img
+            src="./images/kepi1.jpeg"
+            class="polaroid-img"
+            id="polaroid-img"
+            alt="Memory"
+          />
+          <div class="polaroid-caption" id="polaroid-cap">
+            Pertama Kali Banget Nih?
+          </div>
+        </div>
+
+        <div class="carousel-nav">
+          <div class="nav-arrow" onclick="prevPhoto()">‹</div>
+          <div class="dots-indicator">
+            <div class="c-dot active" id="cdot-0"></div>
+            <div class="c-dot" id="cdot-1"></div>
+            <div class="c-dot" id="cdot-2"></div>
+          </div>
+          <div class="nav-arrow" onclick="nextPhoto()">›</div>
+        </div>
+
+        <button class="btn-primary pulse-anim" onclick="nextStep(6)">
+          ADA YANG KELUPAAN NIHH
+        </button>
+      </div>
+
+      <div class="step" id="step-6">
+        <div class="glass-card">
+          <div class="q-tag">JUST A FEW REASONS</div>
+          <div class="q-title">Kenapa Aku Suka Kamu?</div>
+
+          <div class="reasons-list">
+            <div class="reason-item">
+              1. Senyum kamu yang selalu bikin aku tenang dan lupa sama capeknya
+              hari ini.
+            </div>
+            <div class="reason-item">
+              2. Cara kamu cerita tentang hal-hal random yang selalu bikin aku
+              tertarik dengerinnya.
+            </div>
+            <div class="reason-item">
+              3. Karena kamu adalah kamu, Zahra dan spesialnya Kepi. Sederhana, tapi berarti
+              <br>banget buat aku.
+            </div>
+          </div>
+
+          <button class="btn-primary pulse-anim" onclick="nextStep(7)">
+            LANJUT YUUK
+          </button>
+        </div>
+      </div>
+
+      <div class="step" id="step-7">
+        <div class="glass-card question-card">
+          <div class="q-tag">THE QUESTION!!!</div>
+          <div class="q-title">Will you be my girlfriend?</div>
+          <div class="q-desc">
+            I am being completely honest from the bottom of my heart.
+            I've been waiting so long to ask you this, Zahra. 🥺
+          </div>
+
+          <div class="q-buttons">
+            <button class="btn-yes pulse-anim" onclick="showYesModal()">
+              YAAA MAUUU BANGETT! 🥰
+            </button>
+            <button
+              class="btn-no"
+              id="btn-no"
+              onmouseover="runawayNo()"
+              onclick="runawayNo()"
+            >
+              GAMAUK 😝
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="step" id="step-8">
+        <div class="glass-card bouquet-card">
+          <div class="q-tag">🌸 SURPRISE! 🌸</div>
+          <div class="q-title">Yayyy kamu dapet bungaa, Zahraa! 🌹</div>
+          <div class="q-desc" style="margin-bottom: 16px">
+            These flowers are for the most beautiful person reading this right
+            now.
+          </div>
+
+          <svg
+            class="bouquet-img"
+            viewBox="0 0 300 300"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect width="300" height="300" rx="20" fill="#fff0f5" />
+            <path d="M110 240 L70 110 L230 110 L190 240 Z" fill="#ffd1dc" />
+            <path d="M125 240 L90 120 L210 120 L175 240 Z" fill="#ffe4e1" />
+            <circle cx="85" cy="115" r="16" fill="#a8e6cf" />
+            <circle cx="215" cy="115" r="16" fill="#a8e6cf" />
+            <circle cx="100" cy="85" r="14" fill="#88d8b0" />
+            <circle cx="200" cy="85" r="14" fill="#88d8b0" />
+            <circle cx="150" cy="65" r="18" fill="#a8e6cf" />
+            <circle cx="105" cy="115" r="12" fill="#ffaaa5" />
+            <circle cx="195" cy="115" r="12" fill="#ffaaa5" />
+            <circle cx="125" cy="70" r="10" fill="#ffd3b6" />
+            <circle cx="175" cy="70" r="10" fill="#ffd3b6" />
+            <circle cx="120" cy="120" r="22" fill="#ff4081" />
+            <circle cx="120" cy="120" r="14" fill="#e91e63" />
+            <circle
+              cx="120"
+              cy="120"
+              r="7"
+              stroke="#ffffff"
+              stroke-width="2"
+              fill="none"
+            />
+            <circle cx="180" cy="120" r="22" fill="#ff4081" />
+            <circle cx="180" cy="120" r="14" fill="#e91e63" />
+            <circle
+              cx="180"
+              cy="120"
+              r="7"
+              stroke="#ffffff"
+              stroke-width="2"
+              fill="none"
+            />
+            <circle cx="110" cy="90" r="20" fill="#ff6b81" />
+            <circle cx="110" cy="90" r="12" fill="#ff4757" />
+            <circle
+              cx="110"
+              cy="90"
+              r="6"
+              stroke="#ffffff"
+              stroke-width="2"
+              fill="none"
+            />
+            <circle cx="190" cy="90" r="20" fill="#ff6b81" />
+            <circle cx="190" cy="90" r="12" fill="#ff4757" />
+            <circle
+              cx="190"
+              cy="90"
+              r="6"
+              stroke="#ffffff"
+              stroke-width="2"
+              fill="none"
+            />
+            <circle cx="150" cy="95" r="28" fill="#e63980" />
+            <circle cx="150" cy="95" r="18" fill="#b81d5b" />
+            <circle
+              cx="150"
+              cy="95"
+              r="9"
+              stroke="#ffffff"
+              stroke-width="2.5"
+              fill="none"
+            />
+            <circle cx="150" cy="70" r="18" fill="#ff80ab" />
+            <circle cx="150" cy="70" r="11" fill="#c2185b" />
+            <circle
+              cx="150"
+              cy="70"
+              r="5"
+              stroke="#ffffff"
+              stroke-width="2"
+              fill="none"
+            />
+            <path d="M130 190 C120 185, 110 205, 135 200 Z" fill="#ff2a6d" />
+            <path d="M170 190 C180 185, 190 205, 165 200 Z" fill="#ff2a6d" />
+            <circle cx="150" cy="195" r="7" fill="#ff2a6d" />
+            <path
+              d="M147 200 Q135 225 125 240"
+              stroke="#ff2a6d"
+              stroke-width="4"
+              stroke-linecap="round"
+              fill="none"
+            />
+            <path
+              d="M153 200 Q165 225 175 240"
+              stroke="#ff2a6d"
+              stroke-width="4"
+              stroke-linecap="round"
+              fill="none"
+            />
+            <path
+              d="M80 65 L83 72 L90 75 L83 78 L80 85 L77 78 L70 75 L77 72 Z"
+              fill="#ffda79"
+            />
+            <path
+              d="M220 65 L223 72 L230 75 L223 78 L220 85 L217 78 L210 75 L217 72 Z"
+              fill="#ffda79"
+            />
+            <circle cx="150" cy="40" r="3" fill="#ffda79" />
+            <circle cx="70" cy="150" r="2.5" fill="#ffda79" />
+            <circle cx="230" cy="150" r="2.5" fill="#ffda79" />
+          </svg>
+
+          <button class="btn-primary" onclick="nextStep(9)">
+            SEE WHAT ELSE I PREPARED 🎁
+          </button>
+        </div>
+      </div>
+
+      <div class="step" id="step-9">
+        <div class="q-title" style="margin-bottom: 6px; text-align: center">
+          Flowers & Gifts 🎁
+        </div>
+        <div class="q-desc" style="text-align: center; margin-bottom: 20px">
+          Because you deserve the whole universe, and more ✨
+        </div>
+
+        <div class="gifts-list">
+          <div class="gift-item">
+            <div class="gift-icon">🌹</div>
+            <div class="gift-text">
+              <h4>RED ROSES</h4>
+              <p>
+                A bouquet of the most beautiful red roses carrying everything
+                I've felt for you all along.
+              </p>
+            </div>
+          </div>
+          <div class="gift-item">
+            <div class="gift-icon">🍫</div>
+            <div class="gift-text">
+              <h4>CHOCOLATES</h4>
+              <p>
+                As sweet as the smile you give me every single time — I want you
+                to feel that warmth every day.
+              </p>
+            </div>
+          </div>
+          <div class="gift-item">
+            <div class="gift-icon">⭐</div>
+            <div class="gift-text">
+              <h4>YOUR OWN STAR</h4>
+              <p>
+                If I could give you all the stars in the sky, I would. But for
+                now, let me give you my heart first.
+              </p>
+            </div>
+          </div>
+          <div class="gift-item">
+            <div class="gift-icon">💌</div>
+            <div class="gift-text">
+              <h4>MY PROMISES</h4>
+              <p>
+                To always be honest, to stay by your side, and to make sure you
+                feel endlessly loved.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn-primary pulse-anim" onclick="nextStep(10)">
+          OIYAA TERAKHIR NII 🫣
+        </button>
+      </div>
+
+      <div class="step" id="step-10">
+        <div class="glass-card" style="text-align: center; padding: 40px 24px">
+          <div
+            class="q-title"
+            style="
+              font-size: 38px;
+              color: var(--pink-primary);
+              margin-bottom: 16px;
+            "
+          >
+            Thank You, Zahra! 💖
+          </div>
+          <div
+            class="q-desc"
+            style="font-size: 15px; line-height: 1.8; color: #4a2838"
+          >
+            Thank you so, so much for saying yes.<br />
+            You have absolutely no idea just how happy you've made me feel right
+            now.<br />
+            My heart is genuinely bursting. 😭🎀<br /><br />
+            <strong
+              >Starting from this moment, let's write the most beautiful
+              chapters and the sweetest memories together. I promise to give you
+              my very best, every single day. Happy together! 💑👑💖</strong
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="popup-overlay" id="wrong-pin-popup">
+      <div class="popup-box">
+        <div class="popup-icon">🔒</div>
+        <div class="popup-title">TETOT PIN SALAH 🤫</div>
+        <div class="popup-desc">
+          Coba inget-inget lagi kapan pertama kali kita ketemu
+        </div>
+        <button
+          class="btn-primary"
+          style="width: 100%; border-radius: 20px"
+          onclick="closePopup()"
+        >
+          Cobaa Lagii
+        </button>
+      </div>
+    </div>
+
+    <div class="yes-modal" id="yes-modal">
+      <div class="yes-box">
+        <div
+          style="
+            font-size: 40px;
+            margin-bottom: 12px;
+            animation: heartbeat 1.5s infinite;
+          "
+        >
+          💖
+        </div>
+        <div class="popup-title" style="font-size: 28px">
+          YAYYYY DIA MAUU 🎉
+        </div>
+        <div class="popup-desc" style="margin-bottom: 24px">
+          You've made me the happiest person, Zahra 🤍
+        </div>
+        <button
+          class="btn-primary"
+          style="width: 100%; border-radius: 25px"
+          onclick="nextStepFromYes()"
+        >
+          Lanjut Liat Kejutan 👉
+        </button>
+      </div>
+    </div>
+
+    <script src="kepi.js"></script>
+  </body>
+</html>
